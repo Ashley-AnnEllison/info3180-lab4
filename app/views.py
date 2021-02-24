@@ -38,9 +38,13 @@ def upload():
     # Validate file upload on submit
     if request.method == 'POST':
         if myphoto.validate_on_submit():
-            img = myphoto.photo.data
+            img = myphoto.image.data
             filename = secure_filename(img.filename)
+            
         # Get file data and save to your uploads folder
+        img.save(os.path.join(
+            app.config['UPLOAD_FOLDER'], filename
+        ))
 
         flash('File Saved', 'success')
         return redirect(url_for('home'))
